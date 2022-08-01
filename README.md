@@ -1,1 +1,1 @@
-# BAEKJOON_SOLVE
+# Algorithm_SOLVE
