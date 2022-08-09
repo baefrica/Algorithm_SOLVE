@@ -33,17 +33,14 @@ public class Main {
 					for(int s : select) {
 						sum += s;
 					}
-					if(sum > M) {
-						continue;
-					}
-					else {
+					if(sum <= M) {
 						if(sum > max) {
 							max = sum;
-						}
-					}
+						}	// 작은 if 문
+					}	// 큰 if 문
 				}
 			}
 		}
 		System.out.println(max);
-	}
-}
+	}	// main
+}	// class
