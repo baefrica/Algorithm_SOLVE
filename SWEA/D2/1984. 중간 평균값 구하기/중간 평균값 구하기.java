@@ -6,38 +6,46 @@ public class Solution {
 		
 		int T = sc.nextInt();
 		int size = 10;
-		int[] arr = new int[size];
+		int[] data = new int[size];
+		int max = 0;
 		
 		for(int t = 1; t <= T; t++) {
 			for(int i = 0; i < size; i++) {
-				arr[i] = sc.nextInt();	// 배열을 입력 받는다
-			}
-			
-			int tmp = 0;
-			
-			// 배열을 오름차순으로 버블정렬
-			for(int j = size - 1; j > 0; j--) {
-				for(int i = 0; i < size - 1; i++) {
-					if(arr[i] > arr[i+1]) {
-						tmp = arr[i+1];
-						arr[i+1] = arr[i];
-						arr[i] = tmp;
-					}
+				// 배열을 입력 받는다
+				data[i] = sc.nextInt();
+				// 최댓값 찾기
+				if(max < data[i]) {
+					max = data[i];
 				}
 			}
 			
-			int sum = 0;	// 합 초기화
-			int cnt = 0;	// 평균을 구할 값들의 갯수
+			// (최댓값 + 1) 크기의 카운팅 할 배열 생성
+			int[] counts = new int[max+1];
+			int[] temp = new int[size];
 			
-			// 중간값들을 더할 건데..
+			// 카운팅 하기
+			for(int i = 0; i < size; i++) {
+				counts[data[i]]++;
+			}
+			
+			// 누적합 구하기
+			for(int i = 1; i < counts.length; i++) {
+				counts[i] += counts[i-1];
+			}
+			
+			// 새로이 정렬
+			for(int i = (size - 1); i >= 0; i--) {
+				counts[data[i]]--;
+				temp[counts[data[i]]] = data[i];
+			}
+			
+			// 합 초기화
+			int sum = 0;
+			// 중간값들을 더하기
 			for(int i = 1; i < size - 1; i++) {
-				// min 값과 같거나 max 값과 같을 때는 빼줘야한다
-				if(arr[i] != arr[0] && arr[i] != arr[size-1]) {
-					sum += arr[i];
-					cnt++;
-				}
+				sum += temp[i];
 			}
-			System.out.println("#" + t + " " + Math.round(((double)sum / cnt)));
+			System.out.println("#" + t + " " + Math.round(((double)sum / (size - 2))));
 		}
 	}
 }
