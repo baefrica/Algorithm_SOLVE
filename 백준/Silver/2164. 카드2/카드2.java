@@ -8,39 +8,41 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		
 		int N = sc.nextInt();
+		// 배열의 크기를 (2 * N) 으로 해준다
 		card = new int[2 * N];
 		for(int n = 0; n < N; n++) {
 			card[n] = (n + 1);
 		}
 		
-		rear = N - 1;
-		
-		int cnt = 1;
-		
+		rear = (N - 1);
+		// front == rear 일 때까지 반복
 		while(front != rear) {
-			int now = deQueue();
-			if(cnt % 2 == 0) {
-				enQueue(now);
-			}
-			cnt++;
+			deQueue();
+			enQueue();
 		}
 		System.out.println(card[front]);
 	}
-	
-	public static int deQueue() {
-		int removeValue= card[front];
+	// 1. 맨 위의 카드 삭제하기
+	public static void deQueue() {
 		card[front++] = 0;
-		
-//		for(int i = 0; i < rear; i++) {
-//			card[i] = card[i+1];
-//		}
-		
-//		rear--;
-		
-		return removeValue;
 	}
-	public static void enQueue(int item) {
-		card[rear+1] = item;
+	// 2. 맨 위의 카드를 아래로 보내기
+	public static void enQueue() {
+		card[rear+1] = card[front];
+		front++;
 		rear++;
 	}
+	// 배열의 크기를 N으로 했을 때 시간초과나는..
+//	public static void deQueue() {
+//		card[front] = 0;
+//		
+//		for(int i = front; i < rear; i++) {
+//			card[i] = card[i+1];
+//		}
+//		rear--;
+//	}
+//	public static void enQueue() {
+//		card[rear+1] = card[front++];
+//		rear++;
+//	}
 }
