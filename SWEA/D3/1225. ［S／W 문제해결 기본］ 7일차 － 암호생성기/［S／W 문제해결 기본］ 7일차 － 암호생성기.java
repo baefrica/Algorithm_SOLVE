@@ -10,9 +10,24 @@ public class Solution {
 			int t = sc.nextInt();
 			
 			Queue<Integer> queue = new LinkedList<>();
+			int min = Integer.MAX_VALUE;
 			// 8개의 수를 입력 받으면서 큐에 삽입
 			for(int i = 0; i < 8; i++) {
-				queue.add(sc.nextInt());
+				int num = sc.nextInt();
+				queue.add(num);
+				
+				// 최솟값 구하기
+				if(min > num) {
+					min = num;
+				}
+			}
+			
+			// 최솟값을 15로 나눈 몫에서 1을 빼준다
+			int div = ((min / 15) - 1);
+			
+			// 각 큐의 값에서 15의 배수만큼 빼주면서 숫자의 크기를 줄여준다
+			for(int i = 0; i < 8; i++) {
+				queue.add(queue.poll() - (div * 15));
 			}
 			
 			// 전체 반복문을 끝내기 위한 방법
