@@ -17,12 +17,12 @@ public class Solution {
 		
 		// 자식 노드가 없을 때는 left = -1, right = -1 이 되고 word[1] 출력하고 return
 		// left - 1, right - 1 해주는 이유는 left, right 값 찍었을 때 값보다 배열의 인덱스는 항상 1이 작다.
-		if(left != -1) {
+		if(left > 0) {
 			inorder(arr[left-1]);
 		}
-		// 왼쪽 자식이 없으면 여기로 넘어온다
 		System.out.print(word[1]);
-		if(right != -1) {
+		// 왼쪽 자식이 없으면 여기로 넘어온다
+		if(right > 0) {
 			inorder(arr[right-1]);
 		}
 		// 나를 불렀던 곳으로 돌아간다
