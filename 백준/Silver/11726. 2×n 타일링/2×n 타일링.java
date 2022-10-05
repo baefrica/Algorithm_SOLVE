@@ -8,7 +8,7 @@ public class Main {
 		if(n > 2 && memo[n] == 0) {
 			// tiling(n-1) 에 세로막대 하나 추가
 			// tiling(n-2) 에 이단옆차기
-			memo[n] = (tiling(n-1) + tiling(n-2)) % 10007;
+			memo[n] = (tiling(n-1) % 10007 + tiling(n-2) % 10007) % 10007;
 		}
 		
 		return memo[n];
@@ -23,7 +23,7 @@ public class Main {
 		memo[2] = 2;
 		
 		// (2 x n) 크기의 직사각형을 채우는 방법의 수를 10,007로 나눈 나머지를 출력
-		System.out.println(tiling(n));
+		System.out.println(tiling(n) % 10007);
 	}
 }
 
@@ -32,7 +32,11 @@ public class Main {
 //
 // 9
 //
+// 999
+//
 //# output :
 // 2
 //
 // 55
+//
+// 6463
