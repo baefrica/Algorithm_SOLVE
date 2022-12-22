@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		StringBuilder sb = new StringBuilder();
 		
 		int M = sc.nextInt();
 		int N = sc.nextInt();
@@ -18,7 +19,7 @@ public class Main {
 			// false 이고 범위 내에 속하면 출력
 			else {
 				if(i >= M) {
-					System.out.println(i);
+					sb.append(i + "\n");
 				}
 			}
 			
@@ -27,5 +28,6 @@ public class Main {
 				check[j] = true;
 			}
 		}
+		System.out.println(sb);
 	}
 }
