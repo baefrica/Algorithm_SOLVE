@@ -1,0 +1,6 @@
+-- 코드를 입력하세요
+SELECT ANIMAL_ID, NAME FROM ANIMAL_INS
+-- 특정 문자열이 포함되어있는 지 여부 확인
+WHERE NAME LIKE "%EL%"
+AND ANIMAL_TYPE = "Dog"
+ORDER BY NAME
