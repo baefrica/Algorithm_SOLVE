@@ -1,6 +1,6 @@
 class Solution {
     public int solution(String s) {
-        int answer = 0;
+        /*int answer = 0;
         String num = "";
         
         for(int i = 0; i < s.length(); i++) {
@@ -73,6 +73,16 @@ class Solution {
         }   // for문 끝
         
         answer = Integer.parseInt(num);
+        */
+        int answer = 0;
+        String[] strArr = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        
+        for(int i = 0; i < 10; i++) {
+            s = s.replaceAll(strArr[i], Integer.toString(i));
+        }
+        
+        answer = Integer.parseInt(s);
+
         return answer;
     }
 }
