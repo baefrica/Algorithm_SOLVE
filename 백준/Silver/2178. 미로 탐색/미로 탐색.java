@@ -1,81 +1,80 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
+import java.util.StringTokenizer;
+
+class Node {
+	int r;
+	int c;
+
+	Node(int r, int c) {
+		this.r = r;
+		this.c = c;
+	}
+}
 
 public class Main {
-	static int cnt;
-	static boolean visited[][];
-	static int[] dr = {-1, 0, 1, 0};
-	static int[] dc = {0, 1, 0, -1};
-	
-	public static class Node {
-		int r, c;
-		
-		Node(int r, int c) {
-			this.r = r;
-			this.c = c;
-		}
-	}
-	
-	// main	// bfs
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		int N = sc.nextInt();
-		int M = sc.nextInt();
-		char[][] map = new char[N][M];
-		for(int i = 0; i < N; i++){
-			String line = sc.next();
-			for(int j = 0; j < M; j++) {
-				map[i][j] = line.charAt(j);
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken()); // 세로 길이
+		int M = Integer.parseInt(st.nextToken()); // 가로 길이
+		int[][] board = new int[N][M];
+		for (int i = 0; i < N; i++) {
+			String str = br.readLine();
+			for (int j = 0; j < M; j++) {
+				board[i][j] = str.charAt(j) - '0';
 			}
 		}
-		
-		visited = new boolean[N][M];
-		Queue<Node> queue = new LinkedList<>();
-				
-		// 시작점 체크
-		int r = 0;
-		int c = 0;
-		cnt = 0;
-		queue.add(new Node(r, c));
-		visited[r][c] = true;
-		cnt++;
-		
-		Loop :
-		while(!queue.isEmpty()) {
-			// 큐의 크기만큼 다 빼는 게 한 카운팅
-			int size = queue.size();
-			for(int i = 0; i < size; i++) {
-				// 큐에 들어있는 맨 위에 걸 빼낸다
-				Node node = queue.poll();
-				
-				// 종료
-				if(node.r == (N - 1) && node.c == (M - 1)) {
-					System.out.println(cnt);
-					break Loop;
-				}
-				
-				int nr = 0;
-				int nc = 0;
-				for(int d = 0; d < 4; d++) {
-					nr = node.r + dr[d];
-					nc = node.c + dc[d];
-					
-					// 패스조건
-					if(nr < 0 || nc < 0 || nr >= N || nc >= M) {
-						continue;
-					}
-					if(map[nr][nc] == '0' || visited[nr][nc]) {
-						continue;
-					}
-					//
-					
-					queue.add(new Node(nr, nc));
-					visited[nr][nc] = true;
-				}
-			}
+
+		Queue<Node> queue = new LinkedList<>(); // 큐 생성
+		boolean[][] visited = new boolean[N][M]; // 방문 처리 배열 생성
+
+		queue.add(new Node(0, 0));
+		visited[0][0] = true;
+		int cnt = 0;
+		int cntMIN = Integer.MAX_VALUE;
+
+		// BFS
+		while (!queue.isEmpty()) {
+			int size = queue.size(); // 큐의 사이즈
 			cnt++;
-		}	// while 문
+
+			for (int s = 0; s < size; s++) {
+				Node curr = queue.poll();
+
+				// 사방 탐색
+				int[] dr = { 0, 0, -1, 1 };
+				int[] dc = { -1, 1, 0, 0 };
+				for (int d = 0; d < 4; d++) {
+					int nr = curr.r + dr[d];
+					int nc = curr.c + dc[d];
+					
+					// 최소의 칸 수 계산
+					if (nr == N - 1 && nc == M - 1) {
+						cntMIN = Math.min(cntMIN, cnt + 1);
+					}
+
+					// 기저 조건
+					if (nr < 0 || nc < 0 || nr >= N || nc >= M) {
+						continue;
+					}
+					if (visited[nr][nc]) {
+						continue;
+					}
+					if (board[nr][nc] == 0) {
+						continue;
+					}
+
+					queue.add(new Node(nr, nc)); // 큐에 삽입
+					visited[nr][nc] = true; // 방문 처리
+				}
+			}
+		} // 빈 큐가 되어 while문 종료
+
+		System.out.println(cntMIN);
 	}
 }
