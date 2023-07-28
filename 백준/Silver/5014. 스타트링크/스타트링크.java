@@ -2,6 +2,16 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+// 리팩토링한 코드 !!
+class Node {
+	int floor, cnt;
+
+	Node(int floor, int cnt) {
+		this.floor = floor;
+		this.cnt = cnt;
+	}
+}
+
 public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -12,46 +22,39 @@ public class Main {
 		int U = sc.nextInt(); // 위로 U층 가는 버튼
 		int D = sc.nextInt(); // 아래로 D층 가는 버튼
 
-		Queue<Integer> queue = new LinkedList<>();
+		Queue<Node> queue = new LinkedList<>();
 		boolean[] visited = new boolean[F + 1];
 		boolean flag = false;
-		// 다음 층으로 가기 위해 눌러야 하는 버튼의 수라는 점에 유의!
-		int cnt = -1;
 
-		queue.add(S);
+		// cnt : 다음 층으로 가기 위해 눌러야 하는 버튼의 수라는 점에 유의 !!
+		queue.add(new Node(S, 0));
 		visited[S] = true;
 
 		while (!queue.isEmpty()) {
-			int size = queue.size();
-			cnt++;
+			Node curr = queue.poll();
 
-			for (int s = 0; s < size; s++) {
-				int curr = queue.poll();
+			// 탈출 조건
+			if (curr.floor == G) {
+				System.out.println(curr.cnt);
+				flag = true;
+				queue.clear();
+				break;
+			}
 
-				// 탈출 조건
-				if (curr == G) {
-					flag = true;
-					queue.clear();
-					break;
-				}
+			int up = curr.floor + U;
+			int down = curr.floor - D;
 
-				int up = curr + U;
-				int down = curr - D;
-
-				if (up <= F && !visited[up]) {
-					queue.add(up);
-					visited[up] = true;
-				}
-				if (down > 0 && !visited[down]) {
-					queue.add(down);
-					visited[down] = true;
-				}
+			if (up <= F && !visited[up]) {
+				queue.add(new Node(up, curr.cnt + 1));
+				visited[up] = true;
+			}
+			if (down > 0 && !visited[down]) {
+				queue.add(new Node(down, curr.cnt + 1));
+				visited[down] = true;
 			}
 		} // while문 끝
 
-		if (flag) {
-			System.out.println(cnt);
-		} else {
+		if (!flag) {
 			System.out.println("use the stairs");
 		}
 	}
