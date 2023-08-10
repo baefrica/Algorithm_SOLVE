@@ -6,19 +6,19 @@ public class Main {
 
 	// 원판 n개를 a번 기둥에서 b번 기둥으로 옮기는 함수
 	public static void func(int a, int b, int n) {
-		K++;
-
-		if (n == 1) {
-			sb.append(a + " " + b).append("\n");
-			return;
-		}
+//		K++;
+//
+//		if (n == 1) {
+//			sb.append(a + " " + b).append("\n");
+//			return;
+//		}
 
 //		다른 방법
-//		if (n == 0) {
-//			return;
-//		} else {
-//			K++;
-//		}
+		if (n == 0) {
+			return;
+		} else {
+			K++;
+		}
 
 		// (n-1)개 원판을 a, b가 아닌 다른 기둥으로 옮겨야 한다.
 		func(a, 6 - a - b, n - 1);
