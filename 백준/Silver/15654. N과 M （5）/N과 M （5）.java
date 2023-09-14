@@ -2,50 +2,66 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
+	static StringBuilder sb;
 	static int N;
 	static int M;
 	static int[] arr;
 	static boolean[] visited;
-	static int[] result;
+	static int[] ans;
 
-	static void perm(int idx) {
-		if (idx == M) {
-			StringBuilder sb = new StringBuilder();
-
-			for (int i = 0; i < M; i++) {
-				sb.append(result[i]).append(" ");
+	public static void func(int idx, int cnt) {
+		// 기저조건
+		if (cnt == M) {
+			// 출력을 위한 과정
+			for (int i : ans) {
+				sb.append(i).append(" ");
 			}
-			System.out.println(sb);
+			sb.append("\n");
+
 			return;
 		}
 
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < arr.length; i++) {
+			// true면 패스
 			if (visited[i]) {
 				continue;
 			}
-
-			result[idx] = arr[i];
+			
+			// ans에 삽입
+			ans[idx] = arr[i];
+			// 방문 표시
 			visited[i] = true;
-			perm(idx + 1);
+			
+			func(idx + 1, cnt + 1);
+			
+			// 방문 풀기
 			visited[i] = false;
 		}
 	}
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		sb = new StringBuilder();
 
 		N = sc.nextInt();
 		M = sc.nextInt();
-		arr = new int[N];
-		visited = new boolean[N];
-		result = new int[M];
 
+		// 숫자 배열을 입력받고 오름차순 정렬하기
+		arr = new int[N];
 		for (int i = 0; i < N; i++) {
 			arr[i] = sc.nextInt();
 		}
-		// 오름차순 정렬
 		Arrays.sort(arr);
 
-		perm(0);
+		visited = new boolean[N];
+
+		// 정답을 저장할 배열
+		ans = new int[M];
+		
+		// 백트래킹 함수 실행
+		func(0, 0);
+		
+		// 출력
+		System.out.print(sb);
 	}
 }
