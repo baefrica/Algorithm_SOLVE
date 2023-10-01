@@ -1,15 +1,13 @@
 -- 코드를 입력하세요
-SELECT *
+SELECT HOST_ID
+FROM PLACES
+GROUP BY HOST_ID
+HAVING COUNT(ID) > 1;
+
+SELECT ID, NAME, HOST_ID
 FROM PLACES
 WHERE HOST_ID IN (SELECT HOST_ID
                   FROM PLACES
                   GROUP BY HOST_ID
-                  HAVING COUNT(*) >= 2)
-ORDER BY ID
-
-
--- 헤비 유저 ID 목록
-# SELECT HOST_ID
-# FROM PLACES
-# GROUP BY HOST_ID
-# HAVING COUNT(*) >= 2
+                  HAVING COUNT(ID) > 1)
+ORDER BY ID;
